@@ -1,10 +1,21 @@
-import React from 'react'
-import HomePage from './pages/HomePage'
+import React, { useState, createContext } from 'react';
+import HomePage from './pages/HomePage';
+
+export const AppContext = createContext();
 
 function App() {
+
+  const [locationInputted, setLocationInputted] = useState('');
+
   return (
     <div>
-        <HomePage />
+      <AppContext.Provider
+        value={{
+          locationInputted,
+          setLocationInputted
+        }}>
+      <HomePage />
+      </AppContext.Provider>
     </div>
   )
 }
