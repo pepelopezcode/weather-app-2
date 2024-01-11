@@ -5,7 +5,20 @@ export const AppContext = createContext();
 
 function App() {
 
-  const [locationInputted, setLocationInputted] = useState('');
+  const [ locationInputted, setLocationInputted ] = useState('');
+
+  // const [ weatherInfo, setWeatherInfo ] = useState({});
+  // const [  ] = useState();
+  // const [  ] = useState();
+  // const [  ] = useState();
+  // const [  ] = useState();
+  // const [  ] = useState();
+  // const [  ] = useState();
+  // const [  ] = useState();
+  // const [  ] = useState();
+  // const [  ] = useState();
+  //temp, feels like, min, max, humidity, weather, windspeed, wind direction, precipitation percent, icon
+
 
   return (
     <div>
