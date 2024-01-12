@@ -1,6 +1,7 @@
 import React from 'react'
 import SearchBar from '../components/SearchBar'
 import MainWeatherCard from '../components/MainWeatherCard'
+import SideWeatherCard from '../components/SideWeatherCard'
 
 
 function HomePage() {
@@ -8,6 +9,10 @@ function HomePage() {
     <div>
       <SearchBar />
       <MainWeatherCard />
+      {[...Array(5)].map((_,i) => (
+        <SideWeatherCard key={i} />
+      ))}
+      
     </div>
   )
 }

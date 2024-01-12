@@ -5,18 +5,19 @@ function SearchBar() {
 
   const { 
     locationInputted,
-    setLocationInputted
+    setLocationInputted,
+    cityConverter
   } = useContext(AppContext);
 
   return (
     <div>
-        <form >
+        <form onSubmit={cityConverter} >
             <input
             type='text'
             id='location'
             value={locationInputted}
             onChange={(e) => setLocationInputted(e.target.value)}
-            placeholder='City or City,State or Zipcode'
+            placeholder='City or City, Country Abbreviation'
             required
             />
             <button

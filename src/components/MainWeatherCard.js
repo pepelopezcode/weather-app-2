@@ -32,8 +32,7 @@ function MainWeatherCard() {
         </p>
         <p className='maxTemp'>
           max
-        </p>
-        
+        </p>        
         <p className='windDirection'>
           direction
         </p>
