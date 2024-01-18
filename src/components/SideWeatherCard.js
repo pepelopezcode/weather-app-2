@@ -16,6 +16,9 @@ function SideWeatherCard() {
         <p>
           max
         </p>
+        <p>
+          pop
+        </p>
       </div>
     </div>
   )

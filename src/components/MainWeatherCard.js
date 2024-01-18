@@ -1,37 +1,42 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext } from '../App'
 
 
 function MainWeatherCard() {
 
-  //temp, feels like, min, max, humidity, weather, windspeed, wind direction, precipitation percent, icon
+  const {
+    currentWeather
+  } = useContext(AppContext)
+
+
 
 
   return (
     <div className='mainWeatherCard'>
       <div className='temperature' >
-        temp
+        {currentWeather.main.temp}°
       </div>
       <div className='weatherIcon' >
         icon
       </div>
       <div className='feelsLikeTemp' >
-        feels
+        feels like {currentWeather.main.feels_like}°
       </div>
       <div className='weatherType' >
-        weather
+        {currentWeather.weather[0].main}
       </div>
       <div className='mainCardSmallInfo' >
         <p className='minTemp'>
-          min
+        min {currentWeather.main.temp_min}°
         </p>
         <p className='windSpeed'>
-          windspeed
+          {(currentWeather.wind.speed).toFixed(1)} mph wind
         </p>
         <p className='humidity'>
-          humidity
+          {currentWeather.main.humidity}% humidity
         </p>
         <p className='maxTemp'>
-          max
+        max {currentWeather.main.temp_max}°
         </p>        
         <p className='windDirection'>
           direction
