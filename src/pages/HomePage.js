@@ -16,7 +16,7 @@ function HomePage() {
     <div>
       <SearchBar />
       { locationSubmitted ? <MainWeatherCard /> : null }
-      {[...Array(5)].map((_,i) => (
+      {[...Array(4)].map((_,i) => (
         <SideWeatherCard key={i} />
       ))}
       

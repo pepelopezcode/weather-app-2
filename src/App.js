@@ -9,7 +9,8 @@ function App() {
   const [ lon, setLon ] = useState(null);
   const [ lat, setLat ] = useState(null);
   const [ currentWeather, setCurrentWeather ] = useState({});
-  const [ locationSubmitted, setLocationSubmitted ] = useState(false)
+  const [ weatherForWeek, setWeatherForWeek ] = useState({});
+  const [ locationSubmitted, setLocationSubmitted ] = useState(false);
 
   // const [ weatherInfo, setWeatherInfo ] = useState({});
   // const [  ] = useState();
@@ -42,12 +43,17 @@ function App() {
   }
   
   const weatherLookUp = () => {
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185`)
-      .then(response => console.log(response.json()))
+
+    if(lon){
+      fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
+        .then(response => response.json())
+        .then(data => setWeatherForWeek(data.list))
     
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
-      .then(response => response.json())
-      .then(setCurrentWeather)
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
+        .then(response => response.json())
+        .then(setCurrentWeather)
+    }
+    
       
     
   }
@@ -57,8 +63,47 @@ function App() {
   },[ lon, lat ])
 
   useEffect(() => {
-    locationInputted ? setLocationSubmitted(true) : null
-  },[currentWeather])
+    if ( (Object.keys(currentWeather).length !== 0) && ( Object.keys(weatherForWeek).length !== 0 ) ) {
+      setLocationSubmitted(true)
+      groupWeatherByLocalDateTime(weatherForWeek)
+      
+    } 
+    
+  },[ currentWeather, weatherForWeek ])
+
+  const convertUTCToLocal = (utcDateTime) => {
+    const utcDate = new Date(utcDateTime + ' UTC');
+     
+    const localDate = new Date(utcDate.toLocaleString());
+  
+    return localDate;
+  };
+
+  const groupWeatherByLocalDateTime = (data) => {
+    const groupedData = {};
+
+    
+      data.forEach((entry) => {
+      
+      const localDateTime = convertUTCToLocal(entry.dt_txt);
+      
+      const dayOfWeek = localDateTime.getDay();
+
+      if (!groupedData[dayOfWeek]) {
+        groupedData[dayOfWeek] = [];
+      }
+
+      groupedData[dayOfWeek].push(entry);
+
+    })
+  
+    console.log(groupedData);
+    
+    
+  };
+  
+
+  
   
 
  
