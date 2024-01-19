@@ -8,7 +8,8 @@ import { AppContext } from '../App'
 function HomePage() {
 
   const {
-    locationSubmitted
+    locationSubmitted,
+    modifiedWeatherForWeekData
   } = useContext(AppContext)
 
 
@@ -16,8 +17,7 @@ function HomePage() {
     <div>
       <SearchBar />
       { locationSubmitted ? <MainWeatherCard /> : null }
-      {[...Array(4)].map((_,i) => (
-        <SideWeatherCard key={i} />
+      {modifiedWeatherForWeekData.map((_,i) => ( <SideWeatherCard key={i} />
       ))}
       
     </div>

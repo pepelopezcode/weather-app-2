@@ -9,20 +9,10 @@ function App() {
   const [ lon, setLon ] = useState(null);
   const [ lat, setLat ] = useState(null);
   const [ currentWeather, setCurrentWeather ] = useState({});
-  const [ weatherForWeek, setWeatherForWeek ] = useState({});
+  const [ rawWeatherForWeekData, setRawWeatherForWeekData ] = useState({});
+  const [ modifiedWeatherForWeekData, setModifiedWeatherForWeekData ] = useState([])
   const [ locationSubmitted, setLocationSubmitted ] = useState(false);
 
-  // const [ weatherInfo, setWeatherInfo ] = useState({});
-  // const [  ] = useState();
-  // const [  ] = useState();
-  // const [  ] = useState();
-  // const [  ] = useState();
-  // const [  ] = useState();
-  // const [  ] = useState();
-  // const [  ] = useState();
-  // const [  ] = useState();
-  // const [  ] = useState();
-  //temp, feels like, min, max, humidity, weather, windspeed, wind direction, precipitation percent, icon
 
   const cityConverter = (event) => {
     event.preventDefault()
@@ -38,38 +28,40 @@ function App() {
         setLat(data[0].lat)
       })
       .catch( error => console.error('Fectch Error', error) )
-    
-    
+  
   }
+
+
   
   const weatherLookUp = () => {
 
     if(lon){
       fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
         .then(response => response.json())
-        .then(data => setWeatherForWeek(data.list))
+        .then(data => setRawWeatherForWeekData(data.list))
     
       fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
         .then(response => response.json())
         .then(setCurrentWeather)
-    }
-    
-      
-    
-  }
+  }}
+
 
   useEffect(() => {
     weatherLookUp();
   },[ lon, lat ])
 
+
+
   useEffect(() => {
-    if ( (Object.keys(currentWeather).length !== 0) && ( Object.keys(weatherForWeek).length !== 0 ) ) {
+    if ( (Object.keys(currentWeather).length !== 0) && ( Object.keys(rawWeatherForWeekData).length !== 0 ) ) {
       setLocationSubmitted(true)
-      groupWeatherByLocalDateTime(weatherForWeek)
+      groupWeatherByDayOfWeek(rawWeatherForWeekData)
       
     } 
     
-  },[ currentWeather, weatherForWeek ])
+  },[ currentWeather, rawWeatherForWeekData ])
+
+
 
   const convertUTCToLocal = (utcDateTime) => {
     const utcDate = new Date(utcDateTime + ' UTC');
@@ -79,11 +71,12 @@ function App() {
     return localDate;
   };
 
-  const groupWeatherByLocalDateTime = (data) => {
+
+
+  const groupWeatherByDayOfWeek = (data) => {
     const groupedData = {};
 
-    
-      data.forEach((entry) => {
+    data.forEach((entry) => {
       
       const localDateTime = convertUTCToLocal(entry.dt_txt);
       
@@ -96,11 +89,34 @@ function App() {
       groupedData[dayOfWeek].push(entry);
 
     })
-  
-    console.log(groupedData);
-    
+
+    weekArranger(groupedData)
     
   };
+
+
+
+  const weekArranger = (weekData) => {
+    let numberOfDayOfWeek = new Date().getDay();
+
+    const weekOrder = [];
+
+    for (let i = 0; i < 7; i++) {
+      if ( numberOfDayOfWeek < 7 ) {
+        weekOrder.push(`${numberOfDayOfWeek}`);  
+      }else {
+        numberOfDayOfWeek = 0;
+        weekOrder.push(`${numberOfDayOfWeek}`);
+      }
+        numberOfDayOfWeek += 1;
+    }
+
+    const orderedWeatherWeekData = weekOrder.map(key => weekData[key])
+
+    
+    setModifiedWeatherForWeekData(orderedWeatherWeekData.slice(1, -2))
+    
+  }
   
 
   
@@ -117,7 +133,8 @@ function App() {
           setLocationInputted,
           cityConverter,
           currentWeather,
-          locationSubmitted
+          locationSubmitted,
+          modifiedWeatherForWeekData
         }}>
       <HomePage />
       </AppContext.Provider>
