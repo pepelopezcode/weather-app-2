@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../App'
+import WeatherIcon from './WeatherIcon'
 
 
 function MainWeatherCard() {
@@ -9,16 +10,14 @@ function MainWeatherCard() {
   } = useContext(AppContext)
 
 
-
+  
 
   return (
     <div className='mainWeatherCard'>
       <div className='temperature' >
         {currentWeather.main.temp}°
       </div>
-      <div className='weatherIcon' >
-        icon
-      </div>
+        <WeatherIcon iconId={currentWeather.weather[0].icon} />
       <div className='feelsLikeTemp' >
         feels like {currentWeather.main.feels_like}°
       </div>

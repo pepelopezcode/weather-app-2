@@ -1,4 +1,5 @@
 import React from 'react'
+import WeatherIcon from './WeatherIcon'
 
 function SideWeatherCard({weatherData}) {
 
@@ -19,15 +20,18 @@ function SideWeatherCard({weatherData}) {
     return ((tempNeeded == 'min') ? minWeather : maxWeather)
   }
 
+  const date = new Date((weatherData[0].dt_txt) + ' UTC').toDateString()
+ 
 
   return (
     <div>
       <div>
-        {weatherData[4].weather[0].description}
+        {date}
       </div>
       <div>
-        weatherIcon
+        {weatherData[4].weather[0].description}
       </div>
+      <WeatherIcon iconId={weatherData[4].weather[0].icon} />
       <div>
         <p>
           Min: {minAndMaxTemps('min')}°
