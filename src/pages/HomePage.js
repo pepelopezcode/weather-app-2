@@ -14,7 +14,7 @@ function HomePage() {
 
 
   return (
-    <div>
+    <div className='homePage' >
       <SearchBar />
       { locationSubmitted ? <MainWeatherCard /> : null }
       {modifiedWeatherForWeekData.map((item,index) => ( <SideWeatherCard key={index} weatherData={item} />

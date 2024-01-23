@@ -8,6 +8,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  caret-color: transparent;
 }
 
 code {
@@ -17,7 +18,7 @@ code {
 .mainWeatherCard {
   max-width: 800px;
   min-width: fit-content;
-  width: 100%;
+  width: auto;
   display: grid;
   gap: 10px;
   padding: 20px;
@@ -40,36 +41,35 @@ code {
   align-self: center;
   grid-column: 1 / span 3;
   grid-row: span 3;
-  font-size: 24px;
-  color: #851212;
+  font-size: 50px;
+  color: #16066e;
 }
 
-.weatherIcon {
+.mainWeatherCardIcon {
   justify-self: center;
   align-self: center;
   grid-column: 4 / span 3;
-  grid-row: span 3;
-  font-size: 24px;
-  color: #851212;
+  grid-row: span 3; 
+  height: 200px;
 }
 
 .weatherType {
   justify-self: center;
   grid-column: 4 / span 3;
   grid-row: 4;
-  color: #00065c;
+  color: #666;
 }
 
 .feelsLikeTemp {
   justify-self: center;
   grid-column: 1 / span 3;
   grid-row: 4;
-  color: #777;
+  color: #666;
 }
 
 .mainCardSmallInfo {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
+  grid-template-columns: repeat(2, 1fr); 
   gap: 10px;
   grid-column: 1 / span 7;
   justify-items: center;
@@ -80,12 +80,79 @@ code {
 }
 
 .humidity,
-.windSpeed,
-.windDirection,
-.pop {
-  color: #888;
+.windSpeed {
+  color: #666;
 }
 
-img {
-  height: 100px;
+.sideWeatherCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.sideWeatherDate {
+  text-align: center;
+}
+
+.sideWeatherCardIcon {
+  width: 50px; 
+  height: 50px; 
+}
+
+.sideWeatherDesc {
+  margin-left: 10px; 
+}
+
+.sideWeatherSmallInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 10px; 
+}
+
+.sideWeatherSmallInfo p {
+  margin: 5px 0;
+}
+
+.searchBar {
+  caret-color: black;
+}
+
+.searchBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  align-items: center;
+}
+
+input {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 8px 16px;
+  margin-left: 8px;
+  font-size: 16px;
+  background-color: #004a99;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #00254d;
 }

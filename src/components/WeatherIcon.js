@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import sunny from '../weather_icons/01d.png';
 import night from '../weather_icons/01n.png';
@@ -13,11 +13,17 @@ import nightThunder from '../weather_icons/11n.png';
 import snow from '../weather_icons/13d.png';
 import mist from '../weather_icons/50d.png';
 
-function WeatherIcon({iconId}) {
+function WeatherIcon({ iconId, className }) {
 
   const [ imgId, setImgId ] = useState(null)
 
-  const iconMapping = {
+  
+
+  const defaultIcon = sunny;
+
+  useEffect(() => {
+
+    const iconMapping = {
     '01d': sunny,
     '01n': night,
     '02d': partlyCloudyDay,
@@ -36,76 +42,15 @@ function WeatherIcon({iconId}) {
     '13n': snow,
     '50n': mist,
     '50d': mist
-
-  };
-
-  const defaultIcon = sunny;
-
-  useEffect(() => {
-    setImgId(iconMapping[iconId] || defaultIcon);
-  }, [iconId]);
-
-  // useEffect(() => {
-  //   switch (iconId) {
-  //     case '01d':
-  //       setImgId(sunny);
-  //       break;
-  //     case '01n':
-  //       setImgId(night);
-  //       break;
-  //     case '02d':
-  //       setImgId(partlyCloudyDay);
-  //       break;
-  //     case '02n':
-  //       setImgId(partlyCloudyNight);
-  //       break;
-  //     case '03d':
-  //       setImgId(cloudy);
-  //       break;
-  //     case '03n':
-  //       setImgId(cloudy);
-  //       break;
-  //     case '04d':
-  //       setImgId(cloudy);
-  //       break;
-  //     case '04n':
-  //       setImgId(cloudy);
-  //       break;
-  //     case '09d':
-  //       setImgId(showers);
-  //       break;
-  //     case '09n':
-  //       setImgId(showers);
-  //       break;
-  //     case '10d':
-  //       setImgId(sunnyRain);
-  //       break;
-  //     case '10n':
-  //       setImgId(nightRain);
-  //       break;
-  //     case '11d':
-  //       setImgId(dayThunder);
-  //       break;
-  //     case '11n':
-  //       setImgId(nightThunder);
-  //       break;
-  //     case '13d':
-  //       setImgId(snow);
-  //       break;
-  //     case '13n':
-  //       setImgId(snow);
-  //       break;
-  //     default:
-  //       setImgId(mist);
-  //   }
+    };
     
-  // }, [iconId])
-  
-  
+    setImgId(iconMapping[iconId] || defaultIcon);
+  }, [iconId, defaultIcon]);
+ 
 
 
   return (
-    <img src={imgId} alt='weather icon' />
+    <img src={imgId} alt='weather icon' className={className} />
   )
 }
 

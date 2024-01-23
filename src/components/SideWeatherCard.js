@@ -17,22 +17,22 @@ function SideWeatherCard({weatherData}) {
       }
     })
     
-    return ((tempNeeded == 'min') ? minWeather : maxWeather)
+    return ((tempNeeded === 'min') ? minWeather : maxWeather)
   }
 
   const date = new Date((weatherData[0].dt_txt) + ' UTC').toDateString()
  
 
   return (
-    <div>
-      <div>
+    <div className='sideWeatherCard' >
+      <div className='sideWeatherDate' >
         {date}
       </div>
-      <div>
+      <WeatherIcon iconId={weatherData[4].weather[0].icon} className={'sideWeatherCardIcon'} />
+      <div className='sideWeatherDesc' >
         {weatherData[4].weather[0].description}
       </div>
-      <WeatherIcon iconId={weatherData[4].weather[0].icon} />
-      <div>
+      <div className='sideWeatherSmallInfo' >
         <p>
           Min: {minAndMaxTemps('min')}°
         </p>

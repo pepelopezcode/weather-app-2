@@ -33,22 +33,22 @@ function App() {
 
 
   
-  const weatherLookUp = () => {
+ 
 
+
+  useEffect(() => {
     if(lon){
       fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
         .then(response => response.json())
         .then(data => setRawWeatherForWeekData(data.list))
+        .catch(error => console.error('Fetch Error', error));
     
       fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
         .then(response => response.json())
         .then(setCurrentWeather)
-  }}
-
-
-  useEffect(() => {
-    weatherLookUp();
-  },[ lon, lat ])
+        .catch(error => console.error('Fetch Error', error));
+    }
+  },[ lon, lat])
 
 
 
@@ -58,7 +58,7 @@ function App() {
       groupWeatherByDayOfWeek(rawWeatherForWeekData)
       
     } 
-    
+    // eslint-disable-next-line
   },[ currentWeather, rawWeatherForWeekData ])
 
 

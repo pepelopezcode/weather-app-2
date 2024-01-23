@@ -10,7 +10,7 @@ function SearchBar() {
   } = useContext(AppContext);
 
   return (
-    <div>
+    <div className='searchBar' >
         <form onSubmit={cityConverter} >
             <input
             type='text'
