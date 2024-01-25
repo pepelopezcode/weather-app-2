@@ -12,25 +12,29 @@ function App() {
   const [ rawWeatherForWeekData, setRawWeatherForWeekData ] = useState({});
   const [ modifiedWeatherForWeekData, setModifiedWeatherForWeekData ] = useState([]);
   const [ locationSubmitted, setLocationSubmitted ] = useState(false);
-  const [ isFarenheit, setIsFarenheit ] = useState(true)
+  const [ isFarenheit, setIsFarenheit ] = useState(true);
+  const [ errorPage, setErrorPage ] = useState(false)
 
 
   const cityConverter = (event) => {
     event.preventDefault()
     fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${locationInputted}&limit=1&appid=7aa52277998e7f8af62c57e1656e9185`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json()
-      })
+      .then(response =>  response.json())
       .then(data => {
-        setLon(data[0].lon)
-        setLat(data[0].lat)
+        if (data.length === 0){
+          setErrorPage(true)
+        }else{
+          setErrorPage(false)
+          setLon(data[0].lon)
+          setLat(data[0].lat)
+        }
+        
       })
-      .catch( error => console.error('Fectch Error', error) )
+      .catch( error => console.error( error) )
   
   }
+
+  
 
 
   useEffect(() => {
@@ -145,7 +149,7 @@ function App() {
           isFarenheit,
           setIsFarenheit
         }}>
-      <HomePage locationSubmitted={locationSubmitted} />
+      <HomePage locationSubmitted={locationSubmitted} errorPage={errorPage} />
       </AppContext.Provider>
     </div>
   )
