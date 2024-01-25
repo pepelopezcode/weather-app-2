@@ -21,7 +21,7 @@ function SideWeatherCard({weatherData}) {
   }
 
   const date = new Date((weatherData[0].dt_txt) + ' UTC').toDateString()
- 
+
 
   return (
     <div className='sideWeatherCard' >
@@ -34,10 +34,10 @@ function SideWeatherCard({weatherData}) {
       </div>
       <div className='sideWeatherSmallInfo' >
         <p>
-          Min: {minAndMaxTemps('min')}°
+          Min: {Math.round(minAndMaxTemps('min'))}°
         </p>
         <p>
-          Max: {minAndMaxTemps('max')}°
+          Max: {Math.round(minAndMaxTemps('max'))}°
         </p>
         <p>
           Percipitation: {(weatherData[4].pop) * 100}%

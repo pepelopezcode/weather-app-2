@@ -10,8 +10,9 @@ function App() {
   const [ lat, setLat ] = useState(null);
   const [ currentWeather, setCurrentWeather ] = useState({});
   const [ rawWeatherForWeekData, setRawWeatherForWeekData ] = useState({});
-  const [ modifiedWeatherForWeekData, setModifiedWeatherForWeekData ] = useState([])
+  const [ modifiedWeatherForWeekData, setModifiedWeatherForWeekData ] = useState([]);
   const [ locationSubmitted, setLocationSubmitted ] = useState(false);
+  const [ isFarenheit, setIsFarenheit ] = useState(true)
 
 
   const cityConverter = (event) => {
@@ -32,23 +33,33 @@ function App() {
   }
 
 
-  
- 
-
-
   useEffect(() => {
     if(lon){
-      fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
+
+      if (isFarenheit){
+        fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
         .then(response => response.json())
         .then(data => setRawWeatherForWeekData(data.list))
         .catch(error => console.error('Fetch Error', error));
     
-      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=imperial`)
+          .then(response => response.json())
+          .then(setCurrentWeather)
+          .catch(error => console.error('Fetch Error', error));
+      }else{
+        fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=metric`)
         .then(response => response.json())
-        .then(setCurrentWeather)
+        .then(data => setRawWeatherForWeekData(data.list))
         .catch(error => console.error('Fetch Error', error));
+    
+        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7aa52277998e7f8af62c57e1656e9185&units=metric`)
+          .then(response => response.json())
+          .then(setCurrentWeather)
+          .catch(error => console.error('Fetch Error', error));
+      }
+      
     }
-  },[ lon, lat])
+  },[ lon, lat, isFarenheit])
 
 
 
@@ -119,9 +130,6 @@ function App() {
   }
   
 
-  
-  
-
  
 
   
@@ -133,10 +141,11 @@ function App() {
           setLocationInputted,
           cityConverter,
           currentWeather,
-          locationSubmitted,
-          modifiedWeatherForWeekData
+          modifiedWeatherForWeekData,
+          isFarenheit,
+          setIsFarenheit
         }}>
-      <HomePage />
+      <HomePage locationSubmitted={locationSubmitted} />
       </AppContext.Provider>
     </div>
   )

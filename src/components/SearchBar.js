@@ -6,7 +6,9 @@ function SearchBar() {
   const { 
     locationInputted,
     setLocationInputted,
-    cityConverter
+    cityConverter,
+    isFarenheit,
+    setIsFarenheit
   } = useContext(AppContext);
 
   return (
@@ -18,6 +20,7 @@ function SearchBar() {
             value={locationInputted}
             onChange={(e) => setLocationInputted(e.target.value)}
             placeholder='City or City, Country Abbreviation'
+            spellCheck="false"
             required
             />
             <button
@@ -26,6 +29,9 @@ function SearchBar() {
               Search
             </button>
         </form>
+        <button onClick={() => setIsFarenheit(!isFarenheit)} >
+          {isFarenheit ? "F°" : "C°"}
+        </button>
     </div>
   )
 }

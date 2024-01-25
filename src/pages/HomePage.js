@@ -5,19 +5,20 @@ import SideWeatherCard from '../components/SideWeatherCard'
 import { AppContext } from '../App'
 
 
-function HomePage() {
+function HomePage({locationSubmitted}) {
 
   const {
-    locationSubmitted,
-    modifiedWeatherForWeekData
+    modifiedWeatherForWeekData,
+    currentWeather,
+    isFarenheit
   } = useContext(AppContext)
 
 
   return (
     <div className='homePage' >
       <SearchBar />
-      { locationSubmitted ? <MainWeatherCard /> : null }
-      {modifiedWeatherForWeekData.map((item,index) => ( <SideWeatherCard key={index} weatherData={item} />
+      { locationSubmitted ? <MainWeatherCard currentWeather={currentWeather} isFarenheit={isFarenheit} /> : null }
+      {modifiedWeatherForWeekData.map((item,index) => ( <SideWeatherCard key={index} weatherData={item}  />
       ))}
       
     </div>
